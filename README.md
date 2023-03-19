@@ -1,2 +1,4 @@
 # flutter-game
-like a playground
+playground,　
+ 
+https://blog.codemagic.io/flutter-flame-game-development-japanese/
