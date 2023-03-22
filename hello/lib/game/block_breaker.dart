@@ -26,6 +26,8 @@ class BlockBreaker extends FlameGame {
     ball.position
     ..x = size.x / 2 - ball.size.x / 2
     ..y = size.y * kBallStartYRatio;
+
+    await add(ball);
   }
 
 }
