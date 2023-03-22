@@ -18,6 +18,7 @@ class BlockBreaker extends FlameGame {
     ]);
 
     await resetBall();
+    await resetBlock();
   }
 
   Future<void> resetBall() async {
