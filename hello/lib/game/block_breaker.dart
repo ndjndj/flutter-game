@@ -14,7 +14,7 @@ class BlockBreaker extends FlameGame {
     ..position.y = size.y - paddleSize.y - kPaddleStartY;
 
     await addAll([
-      paddle
+      paddle,
     ]);
   }
 }
