@@ -11,7 +11,8 @@ class Ball extends CircleComponent {
     paint = Paint()..color = kBallColor;
 
     final vx = kBallSpeed * cos(spawnAngle * kRad);
-    
+    final vy = kBallSpeed * sin(spawnAngle * kRad);
+    velocity = Vector2(vx, vy);
   }
   late Vector2 velocity;
 
