@@ -21,4 +21,10 @@ class Ball extends CircleComponent {
     return lerpDouble(kBallMinSpawnAngle, kBallMaxSpawnAngle, random)!;
   }
 
+  @override
+  void update(double dt) {
+    position += velocity * dt;
+    super.update(dt);
+  }
+
 }
