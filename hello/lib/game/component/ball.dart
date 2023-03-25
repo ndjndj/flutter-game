@@ -11,6 +11,7 @@ class Ball extends CircleComponent {
     paint = Paint()..color = kBallColor;
 
     final vx = kBallSpeed * cos(spawnAngle * kRad);
+    
   }
   late Vector2 velocity;
 
@@ -18,5 +19,5 @@ class Ball extends CircleComponent {
     final random = Random().nextDouble();
     return lerpDouble(kBallMinSpawnAngle, kBallMaxSpawnAngle, random)!;
   }
-  
+
 }
