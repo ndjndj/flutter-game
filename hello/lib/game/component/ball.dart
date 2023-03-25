@@ -18,4 +18,5 @@ class Ball extends CircleComponent {
     final random = Random().nextDouble();
     return lerpDouble(kBallMinSpawnAngle, kBallMaxSpawnAngle, random)!;
   }
+  
 }
