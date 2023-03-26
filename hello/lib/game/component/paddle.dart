@@ -8,8 +8,7 @@ import "package:hello/constants/constants.dart";
 class Paddle extends RectangleComponent with DragCallbacks {
   Paddle({
     required this.draggingPaddle
-  })
-  : super(
+  }): super(
     size: Vector2(kPaddleWidth, kPaddleHeight),
     paint: Paint()..color = kPaddleColor
   );
