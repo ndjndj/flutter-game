@@ -48,14 +48,14 @@ class Ball extends CircleComponent with CollisionCallbacks {
   ) {
     final collisionPoint = intersectionPoints.first;
 
-    if (other is Paddle) {
-      final paddleRect = other.toAbsoluteRect();
-      updateBallTrajectory(collisionPoint, paddleRect);
-    }
-
     if (other is b.Block) {
       final blockRect = other.toAbsoluteRect();
       updateBallTrajectory(collisionPoint, blockRect);
+    }
+
+    if (other is Paddle) {
+      final paddleRect = other.toAbsoluteRect();
+      updateBallTrajectory(collisionPoint, paddleRect);
     }
 
     super.onCollisionStart(intersectionPoints, other);
@@ -89,6 +89,7 @@ class Ball extends CircleComponent with CollisionCallbacks {
     }
 
     if (isTopOrBottomHit) {
+      velocity.y = -velocity.y;
       if (Random().nextInt(kBallRandomNumber) % kBallRandomNumber == 0) {
         velocity.x += kBallNudgeSpeed;
       }
