@@ -1,3 +1,4 @@
+import 'package:flame/collisions.dart';
 import 'package:flame/experimental.dart';
 import "package:flame/game.dart";
 
@@ -17,6 +18,7 @@ class BlockBreaker extends FlameGame with HasDraggableComponents, HasCollisionDe
     ..y = size.y - paddleSize.y - kPaddleStartY;
 
     await addAll([
+      ScreenHitbox(),
       paddle,
     ]);
 
