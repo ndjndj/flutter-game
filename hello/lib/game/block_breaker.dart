@@ -4,7 +4,7 @@ import "package:flame/game.dart";
 import "package:hello/constants/constants.dart";
 import "package:hello/game/exports.dart";
 
-class BlockBreaker extends FlameGame with HasDraggableComponents {
+class BlockBreaker extends FlameGame with HasDraggableComponents, HasCollisionDetection {
   @override
   Future<void>? onLoad() async {
     final paddle = Paddle(
