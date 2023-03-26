@@ -115,9 +115,11 @@ class Ball extends CircleComponent with CollisionCallbacks {
         }
         if (point.y == screenHitBoxRect.top && !isCollidedScreenHitBoxY) {
           velocity.y = -velocity.y;
+          isCollidedScreenHitBoxY = true;
         }
         if(point.y == screenHitBoxRect.bottom && !isCollidedScreenHitBoxY) {
           //removeFromParent();
+          isCollidedScreenHitBoxY = true;
           velocity.y = -velocity.y;
         }
       }
