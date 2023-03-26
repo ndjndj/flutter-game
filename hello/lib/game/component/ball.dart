@@ -20,6 +20,9 @@ class Ball extends CircleComponent with CollisionCallbacks {
   }
   late Vector2 velocity;
 
+  bool isCollidedScreenHitBoxX = false;
+  bool isCollidedScreenHitBoxY = false;
+
   double get spawnAngle {
     final random = Random().nextDouble();
     return lerpDouble(kBallMinSpawnAngle, kBallMaxSpawnAngle, random)!;
@@ -90,6 +93,41 @@ class Ball extends CircleComponent with CollisionCallbacks {
         velocity.x += kBallNudgeSpeed;
       }
     }
+  }
+
+  @override
+  void onCollision(
+    Set<Vector2> intersectionPoints,
+    PositionComponent other
+  ) {
+    if (other is ScreenHitbox) {
+      final screenHitBoxRect = other.toAbsoluteRect();
+
+      for (final point in intersectionPoints) {
+        if (point.x == screenHitBoxRect.left && !isCollidedScreenHitBoxX) {
+          velocity.x = -velocity.x;
+          isCollidedScreenHitBoxX = true;
+        }
+        if (point.x == screenHitBoxRect.right && !isCollidedScreenHitBoxX) {
+          velocity.x = -velocity.x;
+          isCollidedScreenHitBoxX = true;
+        }
+        if (point.y == screenHitBoxRect.top && !isCollidedScreenHitBoxY) {
+          velocity.y = -velocity.y;
+        }
+        if(point.y == screenHitBoxRect.bottom && !isCollidedScreenHitBoxY) {
+          removeFromParent();
+        }
+      }
+    }
+    super.onCollision(intersectionPoints, other);
+  }
+
+  @override
+  void onCollisionEnd(PositionComponent other) {
+    isCollidedScreenHitBoxX = false;
+    isCollidedScreenHitBoxY = false;
+    super.onCollisionEnd(other);
   }
 
 }
