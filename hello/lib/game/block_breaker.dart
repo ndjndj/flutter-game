@@ -69,6 +69,7 @@ class BlockBreaker extends FlameGame with HasDraggableComponents, HasCollisionDe
   void draggingPaddle(DragUpdateEvent event) {
     final paddle = children.whereType<Paddle>().first;
     paddle.position.x += event.delta.x;
+    paddle.position.y += event.delta.y;
 
     if (paddle.position.x < 0) {
       paddle.position.x = 0;
@@ -76,6 +77,14 @@ class BlockBreaker extends FlameGame with HasDraggableComponents, HasCollisionDe
 
     if (paddle.position.x > size.x - paddle.size.x) {
       paddle.position.x = size.x - paddle.size.x;
+    }
+
+    if (paddle.position.y < 0) {
+      paddle.position.y = 0;
+    }
+
+    if (paddle.position.y > size.y - paddle.size.y) {
+      paddle.position.y = size.y - paddle.size.y;
     }
   }
 
