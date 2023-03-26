@@ -7,6 +7,7 @@ import "package:flame/components.dart";
 
 import "package:hello/constants/constants.dart";
 import 'package:hello/game/component/paddle.dart';
+import 'package:hello/game/component/block.dart' as b;
 
 class Ball extends CircleComponent with CollisionCallbacks {
   Ball() {
@@ -47,6 +48,11 @@ class Ball extends CircleComponent with CollisionCallbacks {
     if (other is Paddle) {
       final paddleRect = other.toAbsoluteRect();
       updateBallTrajectory(collisionPoint, paddleRect);
+    }
+
+    if (other is b.Block) {
+      final blockRect = other.toAbsoluteRect();
+      updateBallTrajectory(collisionPoint, blockRect);
     }
 
     super.onCollisionStart(intersectionPoints, other);
