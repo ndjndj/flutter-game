@@ -1,12 +1,15 @@
+import 'package:flame/experimental.dart';
 import "package:flame/game.dart";
 
 import "package:hello/constants/constants.dart";
 import "package:hello/game/exports.dart";
 
-class BlockBreaker extends FlameGame {
+class BlockBreaker extends FlameGame with HasDraggableComponents {
   @override
   Future<void>? onLoad() async {
-    final paddle = Paddle();
+    final paddle = Paddle(
+      draggingPaddle: draggingPaddle
+    );
     final paddleSize = paddle.size;
 
     paddle.position
@@ -59,6 +62,19 @@ class BlockBreaker extends FlameGame {
     );
 
     await addAll(blocks);
+  }
+
+  void draggingPaddle(DragUpdateEvent event) {
+    final paddle = children.whereType<Paddle>().first;
+    paddle.position.x += event.delta.x;
+
+    if (paddle.position.x < 0) {
+      paddle.position.x = 0;
+    }
+
+    if (paddle.position.x > size.x - paddle.size.x) {
+      paddle.position.x = size.x - paddle.size.x;
+    }
   }
 
 }
