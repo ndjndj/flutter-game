@@ -1,3 +1,5 @@
+import "dart:ui";
+
 import 'package:flame/collisions.dart';
 import 'package:flame/experimental.dart';
 import "package:flame/game.dart";
@@ -5,7 +7,7 @@ import "package:flame/game.dart";
 import "package:hello/constants/constants.dart";
 import "package:hello/game/exports.dart";
 
-class BlockBreaker extends FlameGame with HasDraggableComponents, HasCollisionDetection {
+class BlockBreaker extends FlameGame with HasDraggableComponents, HasCollisionDetection, HasTappableComponents {
   @override
   Future<void>? onLoad() async {
     final paddle = Paddle(
@@ -17,12 +19,14 @@ class BlockBreaker extends FlameGame with HasDraggableComponents, HasCollisionDe
     ..x = size.x / 2 - paddleSize.x / 2
     ..y = size.y - paddleSize.y - kPaddleStartY;
 
+    await addMyTextButton("Start!");
+
     await addAll([
       ScreenHitbox(),
       paddle,
     ]);
 
-    await resetBall();
+
     await resetBlock();
   }
 
@@ -64,6 +68,52 @@ class BlockBreaker extends FlameGame with HasDraggableComponents, HasCollisionDe
     );
 
     await addAll(blocks);
+  }
+
+  Future<void> addMyTextButton(String text) async {
+    final myTextButton = MyTextButton(
+      text,
+      onTapDownMyTextButton: onTapDownMyTextButton,
+      renderMyTextButton: renderMyTextButton
+    );
+
+    myTextButton.position
+    ..x = size.x / 2 - myTextButton.size.x / 2
+    ..y = size.y / 2 - myTextButton.size.y / 2;
+
+    await add(myTextButton);
+  }
+
+  Future<void> onTapDownMyTextButton() async {
+    children.whereType<MyTextButton>().forEach((button) {
+      button.removeFromParent();
+    });
+    await countdown();
+    await resetBall();
+  }
+
+  void renderMyTextButton(Canvas canvas) {
+    final myTextButton = children.whereType<MyTextButton>().first;
+    final rect = Rect.fromLTWH(
+      0,
+      0,
+      myTextButton.size.x,
+      myTextButton.size.y
+    );
+    final bgPaint = Paint()..color = kButtonColor;
+    canvas.drawRect(rect, bgPaint);
+  }
+
+  Future<void> countdown() async {
+    for (var i = kCountdownDuration; i > 0; i--) {
+      final countdownText = CountdownText(count: i);
+      countdownText.position
+      ..x = size.x / 2 - countdownText.size.x / 2
+      ..y = size.y / 2 - countdownText.size.y / 2;
+
+      await add(countdownText);
+      await Future<void>.delayed(const Duration(seconds: 1));
+    }
   }
 
   void draggingPaddle(DragUpdateEvent event) {
